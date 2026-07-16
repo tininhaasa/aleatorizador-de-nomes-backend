@@ -11,7 +11,7 @@ const alunosRouter = require('./routes/alunos');
 const sorteioRouter = require('./routes/sorteio');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // ── MIDDLEWARES ──────────────────────────────────────────────
 app.use(cors());
@@ -28,7 +28,6 @@ app.get('/', (req, res) => {
   res.json({ mensagem: 'API do Sorteador de Limpeza funcionando! 🧹' });
 });
 
-// ── INICIALIZAR O SERVIDOR ───────────────────────────────────
 app.listen(PORT, () => {
-  console.log(`✅ Servidor rodando em https://aleatorizador-de-nomes-backend-three.onrender.com`);
+  console.log(`✅ Servidor rodando na porta https://aleatorizador-de-nomes-backend.onrender.com`);
 });
