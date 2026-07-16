@@ -29,6 +29,6 @@ app.get('/', (req, res) => {
 });
 
 // ── INICIALIZAR O SERVIDOR ───────────────────────────────────
-app.listen("aleatorizador-de-nomes-backend-three.vercel.app", () => {
+app.listen(PORT, () => {
   console.log(`✅ Servidor rodando em https://aleatorizador-de-nomes-backend-three.onrender.com`);
 });
