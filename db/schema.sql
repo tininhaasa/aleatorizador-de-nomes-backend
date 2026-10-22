@@ -51,3 +51,18 @@ CREATE TABLE IF NOT EXISTS sorteios (
 CREATE INDEX IF NOT EXISTS idx_turmas_curso       ON turmas (curso_id);
 CREATE INDEX IF NOT EXISTS idx_alunos_turma        ON alunos (turma_id);
 CREATE INDEX IF NOT EXISTS idx_sorteios_turma_data ON sorteios (turma_id, data_sorteio DESC);
+
+-- ── Usuários (professores e administradores) ─────────────────
+-- As senhas NUNCA são guardadas em texto puro — apenas o hash bcrypt.
+-- O primeiro admin deve ser inserido manualmente via SQL:
+--   INSERT INTO usuarios (nome, email, senha_hash, role)
+--   VALUES ('Admin', 'admin@escola.com', '<hash_bcrypt>', 'admin');
+CREATE TABLE IF NOT EXISTS usuarios (
+  id          SERIAL PRIMARY KEY,
+  nome        VARCHAR(100) NOT NULL,
+  email       VARCHAR(150) NOT NULL UNIQUE,
+  senha_hash  TEXT NOT NULL,
+  role        VARCHAR(20) NOT NULL DEFAULT 'professor' CHECK (role IN ('admin', 'professor')),
+  ativo       BOOLEAN NOT NULL DEFAULT TRUE,
+  criado_em   TIMESTAMP NOT NULL DEFAULT NOW()
+);
