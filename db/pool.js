@@ -13,12 +13,16 @@
 require('dotenv').config();
 const { Pool } = require('pg');
 
-const pool = new Pool({
-  host: process.env.DB_HOST || 'localhost',
-  port: process.env.DB_PORT || 5432,
-  user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD || 'postgres',
-  database: process.env.DB_NAME || 'sorteador_limpeza',
-});
+// Se houver DATABASE_URL (ex: banco na nuvem, como o Neon), usamos ela.
+// Senão, montamos a conexão com as variáveis DB_* (banco local).
+const pool = process.env.DATABASE_URL
+  ? new Pool({ connectionString: process.env.DATABASE_URL.trim() })
+  : new Pool({
+      host: process.env.DB_HOST || 'localhost',
+      port: process.env.DB_PORT || 5432,
+      user: process.env.DB_USER || 'postgres',
+      password: process.env.DB_PASSWORD || 'postgres',
+      database: process.env.DB_NAME || 'sorteador_limpeza',
+    });
 
 module.exports = pool;

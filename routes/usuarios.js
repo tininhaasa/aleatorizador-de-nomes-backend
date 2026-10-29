@@ -33,10 +33,11 @@ router.get('/', async (req, res) => {
 
 // ── CRIAR usuário ────────────────────────────────────────────
 router.post('/', async (req, res) => {
-  const { nome, email, senha, role = 'professor' } = req.body;
+  // Sem senha informada, usa a senha padrão 123456
+  const { nome, email, senha = '123456', role = 'professor' } = req.body;
 
-  if (!nome || !email || !senha) {
-    return res.status(400).json({ erro: 'Nome, email e senha são obrigatórios.' });
+  if (!nome || !email) {
+    return res.status(400).json({ erro: 'Nome e email são obrigatórios.' });
   }
   if (!['admin', 'professor'].includes(role)) {
     return res.status(400).json({ erro: 'Role inválida.' });
